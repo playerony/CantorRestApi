@@ -34,7 +34,7 @@ public class UserController {
 		if(user != null)
 			user.setPassword(encoder.encode(user.getPassword()));
 		
-		if(user.getUserId() != null)
+		if(user.getUserId() != null && user.getUserId() > 0)
 			userService.updateUser(user.getUserId(), user);
 		else
 			userService.insertUser(user);
