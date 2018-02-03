@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,24 +26,18 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
 
-	@Max(20)
 	@NotBlank
 	@Column(name = "first_name")
 	private String firstName;
 
-	@Max(40)
 	@NotBlank
 	@Column(name = "last_name")
 	private String lastName;
 
-	@Min(6)
-	@Max(30)
 	@NotBlank
 	@Column(name = "username")
 	private String username;
 
-	@Min(50)
-	@Max(80)
 	@NotBlank
 	@Column(name = "password")
 	private String password;

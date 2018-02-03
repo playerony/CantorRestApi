@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -32,7 +31,6 @@ public class UserCurrency implements Serializable {
 	private Long userId;
 
 	@NotBlank
-	@Size(max = 3, min = 3)
 	@Column(name = "currency_code")
 	private String currencyCode;
 

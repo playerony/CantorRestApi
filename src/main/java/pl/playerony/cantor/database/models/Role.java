@@ -9,9 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role  implements Serializable, GrantedAuthority {
+	
 	/**
 	 * 
 	 */
@@ -39,6 +42,11 @@ public class Role implements Serializable {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	@Override
+	public String getAuthority() {
+		return roleName;
 	}
 
 }
