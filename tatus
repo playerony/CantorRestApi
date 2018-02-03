@@ -1,0 +1,23 @@
+[33mcommit d541616df0cca65056c043c1d0a45197eb9246b3[m
+Author: Paweł <pawel.wojtasinski.1995@gmail.com>
+Date:   Sat Feb 3 11:39:25 2018 +0100
+
+    Create RoleRepository interface and implementation
+
+[33mcommit a3bae12a641221cbca75d81ae9c8246c5b291928[m
+Author: Paweł <pawel.wojtasinski.1995@gmail.com>
+Date:   Sat Feb 3 10:41:07 2018 +0100
+
+    Create database models
+
+[33mcommit c4718e0b45500f9a30a7cb020008d5796e2bd084[m
+Author: Paweł <pawel.wojtasinski.1995@gmail.com>
+Date:   Sat Feb 3 10:39:58 2018 +0100
+
+    Create default application config class
+
+[33mcommit 7fe9e26fc9b9625c24b4b45558f556cf642b96dd[m
+Author: Paweł <pawel.wojtasinski.1995@gmail.com>
+Date:   Sat Feb 3 09:45:42 2018 +0100
+
+    Initialize commit
