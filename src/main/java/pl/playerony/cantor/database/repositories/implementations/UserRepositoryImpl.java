@@ -38,7 +38,6 @@ public class UserRepositoryImpl implements UserRepository {
 			foundUser.setUsername(user.getUsername());
 			foundUser.setPassword(user.getPassword());
 			foundUser.setEmail(user.getEmail());
-			foundUser.setRoleId(user.getRoleId());
 			foundUser.setBalance(user.getBalance());
 			entityManager.flush();
 		} catch(Exception e) {
@@ -59,7 +58,6 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	@Transactional
 	public User fetchUserByUsername(String username) throws CantorRestApiException {
 		try {
 			String sql = "FROM User as user WHERE user.username LIKE ?";
@@ -76,7 +74,6 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	@Transactional
 	public User fetchUserByEmail(String email) throws CantorRestApiException {
 		try {
 			String sql = "FROM User as user WHERE user.email LIKE ?";
@@ -93,7 +90,6 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<User> fetchAll() throws CantorRestApiException {
 		try {
@@ -110,7 +106,6 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	@Transactional
 	public void removeUser(Long userId) throws CantorRestApiException {
 		try {
 			User user = fetchUserByUserId(userId);
@@ -122,7 +117,6 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	@Transactional
 	public Boolean checkUsername(String username) throws CantorRestApiException {
 		try {
 			String sql = "FROM User as user WHERE user.username LIKE ?";

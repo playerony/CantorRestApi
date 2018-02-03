@@ -22,12 +22,12 @@ public class CORSFilter implements Filter {
 	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
 			throws IOException, ServletException {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) arg1;
-		httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:8585");
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
 		httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
 		httpServletResponse.setHeader("Access-Control-Allow-Headers", "X-Auth-Token, Content-Type");
 		httpServletResponse.setHeader("Access-Control-Expose-Headers", "custom-header1, custom-header2");
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "false");
-        httpServletResponse.setHeader("Access-Control-Max-Age", "4800");
+        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
         arg2.doFilter(arg0, arg1);
 	}
 	

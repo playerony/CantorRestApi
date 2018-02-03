@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.playerony.cantor.exceptions.CantorRestApiException;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity//(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
@@ -32,10 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws CantorRestApiException {
         try {
 			auth.jdbcAuthentication()
-			        .usersByUsernameQuery(userQuery)
-			        .authoritiesByUsernameQuery(roleQuery)
-			        .passwordEncoder(encoder)
-			        .dataSource(dataSource);
+			    .usersByUsernameQuery(userQuery)
+			    .authoritiesByUsernameQuery(roleQuery)
+			    .passwordEncoder(encoder)
+			    .dataSource(dataSource);
 		} catch (Exception e) {
 			throw new CantorRestApiException("Some problems by setting security configuration.", e);
 		}
@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws CantorRestApiException {
         try {
 			http.csrf().disable();
-			http.cors().disable();
+			//http.cors().disable();
 			http.authorizeRequests()
 	            .anyRequest()
 	            .permitAll();
