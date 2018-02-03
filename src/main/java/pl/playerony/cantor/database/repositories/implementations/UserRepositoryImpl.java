@@ -59,6 +59,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+	@Transactional
 	public User fetchUserByUsername(String username) throws CantorRestApiException {
 		try {
 			String sql = "FROM User as user WHERE user.username LIKE ?";
@@ -75,6 +76,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+	@Transactional
 	public User fetchUserByEmail(String email) throws CantorRestApiException {
 		try {
 			String sql = "FROM User as user WHERE user.email LIKE ?";
@@ -90,8 +92,9 @@ public class UserRepositoryImpl implements UserRepository {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
+	@SuppressWarnings("unchecked")
 	public List<User> fetchAll() throws CantorRestApiException {
 		try {
 			String sql = "FROM User as user ORDER BY user.userId";
@@ -107,6 +110,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+	@Transactional
 	public void removeUser(Long userId) throws CantorRestApiException {
 		try {
 			User user = fetchUserByUserId(userId);
@@ -114,6 +118,23 @@ public class UserRepositoryImpl implements UserRepository {
 			entityManager.flush();
 		} catch(Exception e) {
 			throw new CantorRestApiException("There's a problem by delete user", e);
+		}
+	}
+
+	@Override
+	@Transactional
+	public Boolean checkUsername(String username) throws CantorRestApiException {
+		try {
+			String sql = "FROM User as user WHERE user.username LIKE ?";
+			int result = entityManager.createQuery(sql)
+									  .setParameter(1, username)
+									  .getFirstResult();
+			
+			entityManager.flush();
+			
+			return result > 0;
+		} catch(Exception e) {
+			throw new CantorRestApiException("There's a problem by fetching user by username", e);
 		}
 	}
 

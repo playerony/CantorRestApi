@@ -13,10 +13,12 @@ public interface UserRepository {
     User fetchUserByUserId(Long userId) throws CantorRestApiException;
 
     User fetchUserByUsername(String username) throws CantorRestApiException;
-
+    
     User fetchUserByEmail(String email) throws CantorRestApiException;
 
     List<User> fetchAll() throws CantorRestApiException;
 
     void removeUser(Long userId) throws CantorRestApiException;
+    
+    Boolean checkUsername(String username) throws CantorRestApiException;
 }

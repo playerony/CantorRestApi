@@ -24,7 +24,7 @@ public class RoleRepositoryImpl implements RoleRepository {
 			
 			return role;
 		} catch(Exception e) {
-			throw new CantorRestApiException("There's a problem by fetching roles", e);
+			throw new CantorRestApiException("There's a problem by fetching role", e);
 		}
 	}
 

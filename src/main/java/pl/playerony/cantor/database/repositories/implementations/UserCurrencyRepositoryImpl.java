@@ -29,11 +29,11 @@ public class UserCurrencyRepositoryImpl implements UserCurrencyRepository {
 	}
 
 	@Override
-	public void updateUserCurrency(Long userCurrencyId, UserCurrency userCurrency) throws CantorRestApiException {
+	public void updateUserCurrency(Long userCurrencyId, Integer currencyAMount) throws CantorRestApiException {
 		try {
 			UserCurrency foundUserCurrency = fetchUserCurrencyByUserCurrencyId(userCurrencyId);
 			
-			foundUserCurrency.setCurrencyAmount(userCurrency.getCurrencyAmount());
+			foundUserCurrency.setCurrencyAmount(currencyAMount);
 			entityManager.flush();
 		} catch(Exception e) {
 			throw new CantorRestApiException("There's a problem by update userCurrency", e);
@@ -58,10 +58,11 @@ public class UserCurrencyRepositoryImpl implements UserCurrencyRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserCurrency> fetchUserCurrenciesByUserId() throws CantorRestApiException {
+	public List<UserCurrency> fetchUserCurrenciesByUserId(Long userId) throws CantorRestApiException {
 		try {
-			String sql = "FROM UserCurrency";
+			String sql = "FROM UserCurrency as user WHERE user.userId = ?";
 			List<UserCurrency> userCurrencies = (List<UserCurrency>) entityManager.createQuery(sql)
+																	 .setParameter(1, userId)
 																	 .getResultList();
 			
 			entityManager.flush();

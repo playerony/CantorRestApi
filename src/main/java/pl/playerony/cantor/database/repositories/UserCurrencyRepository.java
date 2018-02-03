@@ -8,11 +8,11 @@ import pl.playerony.cantor.exceptions.CantorRestApiException;
 public interface UserCurrencyRepository {
 	void insertUserCurrency(UserCurrency newUserCurrency) throws CantorRestApiException;
 
-    void updateUserCurrency(Long userCurrencyId, UserCurrency userCurrency) throws CantorRestApiException;
+    void updateUserCurrency(Long userCurrencyId, Integer currencyAmount) throws CantorRestApiException;
 
     UserCurrency fetchUserCurrencyByUserCurrencyId(Long userCurrencyId) throws CantorRestApiException;
 
-    List<UserCurrency> fetchUserCurrenciesByUserId() throws CantorRestApiException;
+    List<UserCurrency> fetchUserCurrenciesByUserId(Long userId) throws CantorRestApiException;
 
     void removeUserCurrency(Long userCurrencyId) throws CantorRestApiException;
 }
