@@ -41,16 +41,20 @@ public class UserCurrencyRepositoryImpl implements UserCurrencyRepository {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public UserCurrency fetchUserCurrencyByUserCurrencyId(Long userCurrencyId) throws CantorRestApiException {
 		try {
-			String sql = "FROM UserCurrency as userCurrency WHERE user.userCurrencyId = ?";
-			UserCurrency userCurrency = (UserCurrency) entityManager.createQuery(sql)
+			String sql = "FROM UserCurrency as userCurrency WHERE userCurrency.userCurrencyId = ?";
+			List<UserCurrency> userCurrencies = (List<UserCurrency>) entityManager.createQuery(sql)
 																	 .setParameter(1, userCurrencyId)
-																	 .getSingleResult();
+																	 .getResultList();
 			
 			entityManager.flush();
 			
-			return userCurrency;
+			if(userCurrencies != null && userCurrencies.size() > 0)
+				return userCurrencies.stream().findFirst().get();
+			else
+				return null;
 		} catch(Exception e) {
 			throw new CantorRestApiException("There's a problem by fetching user by username", e);
 		}

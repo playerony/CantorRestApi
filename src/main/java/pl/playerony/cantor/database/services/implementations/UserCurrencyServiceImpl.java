@@ -17,10 +17,22 @@ public class UserCurrencyServiceImpl implements UserCurrencyService {
 	
 	@Override
 	public void insertUserCurrency(UserCurrency newUserCurrency) throws CantorRestApiException {
-		if(userCurrencyRepository.fetchUserCurrencyByUserCurrencyId(newUserCurrency.getUserCurrencyId()) != null)
+		List<UserCurrency> userCurrencies = fetchUserCurrenciesByUserId(newUserCurrency.getUserId());
+		boolean isElementExist = false;
+		
+		if(userCurrencies != null) {
+			for(UserCurrency u : userCurrencies) {
+				if(u.getCurrencyCode().equals(newUserCurrency.getCurrencyCode())) {
+					isElementExist = true;
+					break;
+				}
+			}
+		}
+		
+		if(userCurrencies != null && !isElementExist)
 			userCurrencyRepository.insertUserCurrency(newUserCurrency);
 		else
-			throw new CantorRestApiException("This userCurrencyId[" + newUserCurrency.getUserCurrencyId() + "] doesnt exist for this user.");
+			throw new CantorRestApiException("This userCurrencyId[" + newUserCurrency.getUserCurrencyId() + "] already exist for this user.");
 	}
 
 	@Override
@@ -55,7 +67,12 @@ public class UserCurrencyServiceImpl implements UserCurrencyService {
 
 	@Override
 	public UserCurrency fetchUserCurrencyByUserCurrencyId(Long userCurrencyId) throws CantorRestApiException {
-		return userCurrencyRepository.fetchUserCurrencyByUserCurrencyId(userCurrencyId);
+		UserCurrency userCurrency = userCurrencyRepository.fetchUserCurrencyByUserCurrencyId(userCurrencyId);
+		
+		if(userCurrency != null)
+			return userCurrency;
+		else
+			throw new CantorRestApiException("This userCurrencyId[" + userCurrencyId + "] doesnt exist.");
 	}
 
 }

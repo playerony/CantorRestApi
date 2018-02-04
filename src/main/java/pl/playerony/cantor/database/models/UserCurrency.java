@@ -34,7 +34,7 @@ public class UserCurrency implements Serializable {
 	@Column(name = "currency_code")
 	private String currencyCode;
 
-	@NotBlank
+	@NotNull
 	@Column(name = "currency_amount")
 	private Integer currencyAmount;
 
