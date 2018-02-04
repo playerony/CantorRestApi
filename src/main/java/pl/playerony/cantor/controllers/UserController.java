@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +33,7 @@ public class UserController {
 	@Path("/save")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response insertUser(User user) throws CantorRestApiException {
 		if(user != null && user.getPassword() != null)
 			user.setPassword(encoder.encode(user.getPassword()));
@@ -49,6 +51,7 @@ public class UserController {
 	@DELETE
 	@Path("/remove/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN')")
 	public Response removeUser(@PathParam("id") Long userId) throws CantorRestApiException {
 		userService.removeUser(userId);
 		
@@ -60,6 +63,7 @@ public class UserController {
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response fetchUserByUsername(User user) throws CantorRestApiException {
 		User foundUser = userService.fetchUserByUsername(user.getUsername());
 		

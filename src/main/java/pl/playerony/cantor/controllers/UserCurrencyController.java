@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -30,6 +31,7 @@ public class UserCurrencyController {
 	@Path("/save")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response insertUserCurrency(UserCurrency userCurrency) throws CantorRestApiException {
 		userCurrencyService.insertUserCurrency(userCurrency);
 		
@@ -42,6 +44,7 @@ public class UserCurrencyController {
 	@Path("/buy")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response buyUserCurrency(UserCurrency userCurrency) throws CantorRestApiException {
 		Long userCurrencyId = userCurrency.getUserCurrencyId();
 		Integer userCurrencyAmount = userCurrency.getCurrencyAmount();
@@ -57,6 +60,7 @@ public class UserCurrencyController {
 	@Path("/sell")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response sellUserCurrency(UserCurrency userCurrency) throws CantorRestApiException {
 		Long userCurrencyId = userCurrency.getUserCurrencyId();
 		Integer userCurrencyAmount = userCurrency.getCurrencyAmount();
@@ -71,6 +75,7 @@ public class UserCurrencyController {
 	@GET
 	@Path("/all/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response fetchUserCurrencies(@PathParam("id") Long userId) throws CantorRestApiException {
 		List<UserCurrency> userCurrencies = userCurrencyService.fetchUserCurrenciesByUserId(userId);
 		
@@ -82,6 +87,7 @@ public class UserCurrencyController {
 	@GET
 	@Path("/get/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response fetchUserCurrency(@PathParam("id") Long userCurrencyId) throws CantorRestApiException {
 		UserCurrency userCurrency = userCurrencyService.fetchUserCurrencyByUserCurrencyId(userCurrencyId);
 		

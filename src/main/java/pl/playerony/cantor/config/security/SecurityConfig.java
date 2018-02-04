@@ -10,7 +10,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import pl.playerony.cantor.config.filters.JWTAuthenticationFilter;
+import pl.playerony.cantor.config.filters.JWTLoginFilter;
 import pl.playerony.cantor.exceptions.CantorRestApiException;
 
 @Configuration
@@ -49,6 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.authorizeRequests()
 	            .anyRequest()
 	            .permitAll();
+				//.and()
+                //.addFilterBefore(new JWTLoginFilter("/api/getToken", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                //.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		} catch (Exception e) {
 			throw new CantorRestApiException("Some problems by setting security configuration.", e);
 		}
