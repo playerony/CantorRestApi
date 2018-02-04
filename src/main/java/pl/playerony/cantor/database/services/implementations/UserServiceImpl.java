@@ -39,7 +39,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User fetchUserByUsername(String username) throws CantorRestApiException {
-		return userRepository.fetchUserByUsername(username);
+		User user = userRepository.fetchUserByUsername(username);
+		
+		if(user != null)
+			return user;
+		else
+			throw new CantorRestApiException("This username[" + username + "] doesnt exist in database.");
 	}
 
 }
