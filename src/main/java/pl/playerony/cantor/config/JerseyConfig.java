@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import io.swagger.jaxrs.config.BeanConfig;
 import pl.playerony.cantor.controllers.UserController;
+import pl.playerony.cantor.controllers.UserCurrencyController;
 
 @Component
 @ApplicationPath("/cantor")
@@ -30,5 +31,6 @@ public class JerseyConfig extends ResourceConfig {
     
     private void registerEndpoints() {
     	register(UserController.class);
+    	register(UserCurrencyController.class);
     }
 }
