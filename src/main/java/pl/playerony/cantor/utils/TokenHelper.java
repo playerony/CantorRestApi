@@ -107,4 +107,13 @@ public class TokenHelper {
 
         return null;
     }
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public RoleService getRoleService() {
+		return roleService;
+	}
+	
 }

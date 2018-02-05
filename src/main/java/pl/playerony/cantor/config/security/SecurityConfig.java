@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import pl.playerony.cantor.config.filters.JWTAuthenticationFilter;
 import pl.playerony.cantor.config.filters.JWTLoginFilter;
 import pl.playerony.cantor.exceptions.CantorRestApiException;
+import pl.playerony.cantor.utils.TokenHelper;
 
 @Configuration
 //@EnableGlobalMethodSecurity//(prePostEnabled = true)
@@ -24,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	
+	@Autowired
+	private TokenHelper tokenHelper;
 	
 	@Value("${query.user-query}")
     private String userQuery;
@@ -51,10 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			//http.cors().disable();
 			http.authorizeRequests()
 	            .anyRequest()
-	            .permitAll();
-				//.and()
-                //.addFilterBefore(new JWTLoginFilter("/api/getToken", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                //.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+	            .permitAll()
+				.and()
+                .addFilterBefore(new JWTLoginFilter("/api/getToken", authenticationManager(), tokenHelper), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(tokenHelper), UsernamePasswordAuthenticationFilter.class);
 		} catch (Exception e) {
 			throw new CantorRestApiException("Some problems by setting security configuration.", e);
 		}

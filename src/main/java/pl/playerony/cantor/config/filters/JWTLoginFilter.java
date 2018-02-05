@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,22 +26,24 @@ import pl.playerony.cantor.exceptions.CantorRestApiException;
 import pl.playerony.cantor.utils.TokenHelper;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
-	@Autowired
 	private TokenHelper tokenHelper;
-	
-	@Autowired
 	private UserService userService;
-	
-	@Autowired
 	private RoleService roleService;
 	
-	public JWTLoginFilter(String url, AuthenticationManager authenticationManager) {
+	public JWTLoginFilter(String url, AuthenticationManager authenticationManager, TokenHelper tokenHelper) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authenticationManager);
+        
+        this.tokenHelper = tokenHelper;
+        this.userService = tokenHelper.getUserService();
+        this.roleService = tokenHelper.getRoleService();
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    	if(tokenHelper == null)
+    		System.out.println("null O.o");
+    	
     	tokenHelper.addAuthentication(response, authResult.getName());
     }
 
