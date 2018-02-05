@@ -58,16 +58,20 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public User fetchUserByUsername(String username) throws CantorRestApiException {
 		try {
 			String sql = "FROM User as user WHERE user.username LIKE ?";
-			User user = (User) entityManager.createQuery(sql)
-									 .setParameter(1, username)
-									 .getSingleResult();
+			List<User> users = (List<User>) entityManager.createQuery(sql)
+											.setParameter(1, username)
+											.getResultList();
 			
 			entityManager.flush();
 			
-			return user;
+			if(users != null && users.size() > 0)
+				return users.stream().findFirst().get();
+			else
+				return null;
 		} catch(Exception e) {
 			throw new CantorRestApiException("There's a problem by fetching user by username", e);
 		}
