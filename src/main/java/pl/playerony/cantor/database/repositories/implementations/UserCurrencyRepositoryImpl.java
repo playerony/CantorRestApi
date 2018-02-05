@@ -64,7 +64,7 @@ public class UserCurrencyRepositoryImpl implements UserCurrencyRepository {
 	@Override
 	public List<UserCurrency> fetchUserCurrenciesByUserId(Long userId) throws CantorRestApiException {
 		try {
-			String sql = "FROM UserCurrency as user WHERE user.userId = ?";
+			String sql = "FROM UserCurrency as userCurrency WHERE userCurrency.userId = ?";
 			List<UserCurrency> userCurrencies = (List<UserCurrency>) entityManager.createQuery(sql)
 																	 .setParameter(1, userId)
 																	 .getResultList();
