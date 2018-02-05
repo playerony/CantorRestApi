@@ -28,7 +28,6 @@ public class UserCurrencyController {
 	private UserCurrencyService userCurrencyService;
 	
 	@POST
-	@Path("/save")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -73,6 +72,18 @@ public class UserCurrencyController {
 	}
 	
 	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+	public Response fetchUserCurrency(@PathParam("id") Long userCurrencyId) throws CantorRestApiException {
+		UserCurrency userCurrency = userCurrencyService.fetchUserCurrencyByUserCurrencyId(userCurrencyId);
+		
+		return Response.status(200)
+				       .entity(userCurrency)
+				       .build();
+	}
+	
+	@GET
 	@Path("/all/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -81,18 +92,6 @@ public class UserCurrencyController {
 		
 		return Response.status(200)
 				       .entity(userCurrencies)
-				       .build();
-	}
-	
-	@GET
-	@Path("/get/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-	public Response fetchUserCurrency(@PathParam("id") Long userCurrencyId) throws CantorRestApiException {
-		UserCurrency userCurrency = userCurrencyService.fetchUserCurrencyByUserCurrencyId(userCurrencyId);
-		
-		return Response.status(200)
-				       .entity(userCurrency)
 				       .build();
 	}
 	
