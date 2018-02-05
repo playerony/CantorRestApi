@@ -2,7 +2,9 @@ package pl.playerony.cantor.controllers;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -30,7 +32,6 @@ public class UserController {
 	private BCryptPasswordEncoder encoder;
 	
 	@POST
-	@Path("/save")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -38,10 +39,23 @@ public class UserController {
 		if(user != null && user.getPassword() != null)
 			user.setPassword(encoder.encode(user.getPassword()));
 		
-		if(user.getUserId() != null && user.getUserId() > 0)
-			userService.updateUser(user.getUserId(), user);
-		else
-			userService.insertUser(user);
+		userService.insertUser(user);
+		
+		return Response.status(200)
+				       .entity(user)
+				       .build();
+	}
+	
+	@PUT
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+	public Response updateUser(@PathParam("id") Long userId, User user) throws CantorRestApiException {
+		if(user != null && user.getPassword() != null)
+			user.setPassword(encoder.encode(user.getPassword()));
+		
+		userService.updateUser(userId, user);
 		
 		return Response.status(200)
 				       .entity(user)
@@ -49,7 +63,7 @@ public class UserController {
 	}
 	
 	@DELETE
-	@Path("/remove/{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	//@PreAuthorize("hasAnyRole('ADMIN')")
 	public Response removeUser(@PathParam("id") Long userId) throws CantorRestApiException {
@@ -59,13 +73,13 @@ public class UserController {
 				       .build();
 	}
 	
-	@POST
-	@Path("/get")
+	@GET
+	@Path("/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-	public Response fetchUserByUsername(User user) throws CantorRestApiException {
-		User foundUser = userService.fetchUserByUsername(user.getUsername());
+	public Response fetchUserByUsername(@PathParam("username") String username) throws CantorRestApiException {
+		User foundUser = userService.fetchUserByUsername(username);
 		
 		return Response.status(200)
 					   .entity(foundUser)
