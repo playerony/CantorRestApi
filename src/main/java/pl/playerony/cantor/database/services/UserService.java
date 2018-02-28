@@ -11,4 +11,6 @@ public interface UserService {
 	void removeUser(Long userId) throws CantorRestApiException;
 	
 	User fetchUserByUsername(String username) throws CantorRestApiException;
+	
+	User fetchUserByUserId(Long userId) throws CantorRestApiException;
 }

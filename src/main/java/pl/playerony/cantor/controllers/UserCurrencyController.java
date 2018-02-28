@@ -32,6 +32,7 @@ public class UserCurrencyController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	public Response insertUserCurrency(UserCurrency userCurrency) throws CantorRestApiException {
+
 		userCurrencyService.insertUserCurrency(userCurrency);
 		
 		return Response.status(200)

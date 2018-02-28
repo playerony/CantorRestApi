@@ -74,12 +74,12 @@ public class UserController {
 	}
 	
 	@GET
-	@Path("/{username}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	//@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-	public Response fetchUserByUsername(@PathParam("username") String username) throws CantorRestApiException {
-		User foundUser = userService.fetchUserByUsername(username);
+	public Response fetchUserByUsername(@PathParam("id") Long userId) throws CantorRestApiException {
+		User foundUser = userService.fetchUserByUserId(userId);
 		
 		return Response.status(200)
 					   .entity(foundUser)

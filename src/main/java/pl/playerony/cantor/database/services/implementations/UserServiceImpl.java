@@ -47,4 +47,14 @@ public class UserServiceImpl implements UserService {
 			throw new CantorRestApiException("This username[" + username + "] doesnt exist in database.");
 	}
 
+	@Override
+	public User fetchUserByUserId(Long userId) throws CantorRestApiException {
+		User user = userRepository.fetchUserByUserId(userId);
+		
+		if(user != null)
+			return user;
+		else
+			throw new CantorRestApiException("This userId[" + userId + "] doesnt exist in database.");
+	}
+
 }

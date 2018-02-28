@@ -16,6 +16,8 @@ public class RoleRepositoryImpl implements RoleRepository {
 	@PersistenceContext	
 	private EntityManager entityManager;
 	
+	
+	
 	@Override
 	public Role fetchRoleByRoleId(Long roleId) throws CantorRestApiException {
 		try {
